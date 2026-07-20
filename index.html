@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אהרון — העוזר הטלפוני החכם שלכם</title>
+<meta name="description" content="אהרון מתקשר, זוכר ועוזר — כל יום. גלו מה הוא יכול לעשות עבורכם.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#073f37;--green-mid:#0f6e56;--green-light:#1d9e75;--green-pale:#e1f5ee;
+  --cream:#faf8f4;--cream-dark:#f0ece3;--text:#1a1a1a;--text-mid:#3d3d3a;
+  --text-muted:#6b6b67;--gold:#c8a85e;--white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Assistant',sans-serif;background:var(--cream);color:var(--text);direction:rtl;text-align:right;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{background:var(--green);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Frank Ruhl Libre',serif;font-size:1.5rem;font-weight:700;color:var(--white)}
+.nav-pill{background:rgba(200,168,94,0.15);color:var(--gold);border:1px solid rgba(200,168,94,0.3);font-size:0.8rem;font-weight:700;padding:0.35rem 0.9rem;border-radius:50px;letter-spacing:0.04em}
+
+/* HERO */
+.hero{background:var(--green);color:var(--white);padding:5rem 1.5rem 5rem;text-align:center}
+.hero-eyebrow{display:inline-block;font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:clamp(2.2rem,6vw,3.8rem);font-weight:900;line-height:1.2;margin-bottom:1.2rem;color:var(--white)}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.2rem);font-weight:300;color:rgba(255,255,255,0.75);max-width:540px;margin:0 auto;line-height:1.8}
+
+/* NAME BADGE */
+.name-badge{display:inline-block;margin-top:1.8rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:0.65rem 1.2rem;font-size:0.9rem;color:rgba(255,255,255,0.7);line-height:1.6}
+.name-badge strong{color:var(--gold)}
+
+/* SECTION SHARED */
+.section{padding:4.5rem 1.5rem}
+.section-inner{max-width:880px;margin:0 auto}
+.eyebrow{font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green-light);text-align:center;margin-bottom:0.6rem}
+.section-h2{font-family:'Frank Ruhl Libre',serif;font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;text-align:center;color:var(--green);line-height:1.25;margin-bottom:0.5rem}
+.section-sub{text-align:center;color:var(--text-muted);font-size:1rem;margin-bottom:3rem;max-width:520px;margin-right:auto;margin-left:auto}
+
+/* CAPABILITIES */
+.caps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.cap-card{background:var(--white);border:1px solid #e8e4db;border-radius:16px;padding:1.5rem 1.4rem;display:flex;gap:1rem;align-items:flex-start}
+.cap-icon{width:46px;height:46px;border-radius:12px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0}
+.cap-text h3{font-family:'Frank Ruhl Libre',serif;font-size:1.05rem;font-weight:700;color:var(--green);margin-bottom:0.3rem}
+.cap-text p{font-size:0.88rem;color:var(--text-mid);line-height:1.6}
+
+/* VOICE SECTION */
+.voice-section{background:var(--cream-dark);padding:4.5rem 1.5rem}
+.audio-card{max-width:540px;margin:0 auto;background:var(--white);border:1px solid #e0dbd0;border-radius:20px;padding:1.8rem;box-shadow:0 4px 24px rgba(7,63,55,0.08)}
+.audio-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
+.audio-avatar{width:52px;height:52px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Frank Ruhl Libre',serif;font-size:1.2rem;font-weight:700;color:var(--white);flex-shrink:0}
+.audio-info strong{display:block;font-size:1rem;font-weight:700;color:var(--text)}
+.audio-info span{font-size:0.8rem;color:var(--text-muted)}
+.audio-desc{font-size:0.9rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.2rem;padding:0.8rem;background:var(--green-pale);border-radius:10px;border-right:3px solid var(--green-light)}
+audio{width:100%;border-radius:10px;outline:none}
+audio::-webkit-media-controls-panel{background:var(--green-pale)}
+.audio-note{font-size:0.78rem;color:var(--text-muted);text-align:center;margin-top:0.8rem}
+
+/* CONVERSATION TABS */
+.convo-section{background:var(--white);padding:4.5rem 1.5rem}
+.chat-wrap{max-width:540px;margin:0 auto}
+.phone-frame{background:var(--cream);border:1px solid #e0dbd0;border-radius:28px;padding:1.4rem 1.2rem;box-shadow:0 8px 40px rgba(7,63,55,0.08)}
+.phone-header{display:flex;align-items:center;gap:0.7rem;padding-bottom:1rem;border-bottom:1px solid #e8e4db;margin-bottom:1.2rem}
+.phone-avatar{width:42px;height:42px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Frank Ruhl Libre',serif;font-size:1.1rem;font-weight:700;color:var(--white);flex-shrink:0}
+.phone-info strong{display:block;font-size:0.95rem;font-weight:700;color:var(--text)}
+.phone-info span{font-size:0.75rem;color:var(--text-muted)}
+.online{display:inline-block;width:6px;height:6px;background:#4ade80;border-radius:50%;margin-left:4px;vertical-align:middle}
+.msg-row{display:flex;margin-bottom:0.85rem;gap:0.5rem}
+.msg-row.aharon{flex-direction:row}
+.msg-row.user{flex-direction:row-reverse}
+.bubble{max-width:80%;padding:0.6rem 0.95rem;border-radius:16px;font-size:0.9rem;line-height:1.6}
+.msg-row.aharon .bubble{background:var(--white);color:var(--text);border-bottom-right-radius:4px;border:1px solid #e8e4db}
+.msg-row.user .bubble{background:var(--green);color:var(--white);border-bottom-left-radius:4px}
+.msg-time{font-size:0.68rem;color:var(--text-muted);align-self:flex-end;white-space:nowrap}
+.tab-row{display:flex;gap:0.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab{font-size:0.8rem;font-weight:600;padding:0.35rem 0.85rem;border-radius:50px;border:1.5px solid #ddd;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'Assistant',sans-serif;transition:all 0.18s}
+.tab.active{background:var(--green);color:var(--white);border-color:var(--green)}
+
+/* STORIES */
+.stories-section{background:var(--green);padding:4.5rem 1.5rem}
+.stories-section .eyebrow{color:var(--gold)}
+.stories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:880px;margin:0 auto}
+.story-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.5rem 1.4rem}
+.story-stars{color:var(--gold);font-size:0.9rem;letter-spacing:0.05em;margin-bottom:0.8rem}
+.story-quote{font-size:0.95rem;color:rgba(255,255,255,0.88);line-height:1.75;margin-bottom:1rem;font-style:italic}
+.story-divider{border:none;border-top:1px solid rgba(255,255,255,0.1);margin-bottom:0.8rem}
+.story-value{font-size:0.78rem;font-weight:700;color:var(--gold);margin-bottom:0.2rem;text-transform:uppercase;letter-spacing:0.06em}
+.story-insight{font-size:0.84rem;color:rgba(255,255,255,0.5);line-height:1.55}
+.story-person{font-size:0.78rem;color:rgba(255,255,255,0.35);margin-top:0.7rem}
+
+/* WAITLIST */
+.waitlist-section{background:var(--green);padding:5rem 1.5rem;text-align:center}
+.waitlist-section .eyebrow{color:var(--gold)}
+.full-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,168,94,0.15);border:1px solid rgba(200,168,94,0.3);color:var(--gold);font-size:0.82rem;font-weight:700;padding:0.4rem 1.1rem;border-radius:50px;margin-bottom:1.4rem;letter-spacing:0.04em}
+.waitlist-h2{font-family:'Frank Ruhl Libre',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:var(--white);margin-bottom:0.7rem;line-height:1.25}
+.waitlist-sub{color:rgba(255,255,255,0.65);font-size:1rem;margin-bottom:2.2rem;max-width:460px;margin-right:auto;margin-left:auto}
+.waitlist-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:2rem;max-width:420px;margin:0 auto}
+.waitlist-box h3{font-family:'Frank Ruhl Libre',serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}
+.waitlist-box p{font-size:0.88rem;color:rgba(255,255,255,0.55);margin-bottom:1.4rem}
+.form-group{margin-bottom:0.8rem;text-align:right}
+.form-group label{display:block;font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.7);margin-bottom:0.3rem}
+.form-group input{width:100%;padding:0.7rem 1rem;border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;font-family:'Assistant',sans-serif;font-size:1rem;color:var(--white);background:rgba(255,255,255,0.08);transition:border-color 0.2s;direction:rtl;text-align:right}
+.form-group input:focus{outline:none;border-color:var(--gold)}
+.form-group input::placeholder{color:rgba(255,255,255,0.3)}
+.form-group input[type="tel"]{direction:ltr;text-align:left}
+.btn-join{width:100%;padding:0.85rem;background:var(--gold);color:var(--green);border:none;border-radius:10px;font-family:'Assistant',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;margin-top:0.3rem;transition:opacity 0.2s,transform 0.15s}
+.btn-join:hover{opacity:0.88}
+.btn-join:active{transform:scale(0.98)}
+.form-note{font-size:0.75rem;color:rgba(255,255,255,0.35);text-align:center;margin-top:0.8rem}
+.success-state{display:none;text-align:center;padding:1.5rem 1rem}
+.success-icon{font-size:2.5rem;margin-bottom:0.8rem}
+.success-state h3{font-family:'Frank Ruhl Libre',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:0.4rem}
+.success-state p{font-size:0.9rem;color:rgba(255,255,255,0.6)}
+
+footer{background:#041f1b;color:rgba(255,255,255,0.35);text-align:center;padding:1.4rem 1rem;font-size:0.8rem}
+footer a{color:rgba(255,255,255,0.4);text-decoration:none}
+
+@media(max-width:600px){
+  nav{padding:0.8rem 1.2rem}
+  .hero{padding:3.5rem 1.2rem}
+  .section,.stories-section,.voice-section,.convo-section,.waitlist-section{padding:3rem 1.2rem}
+  .phone-frame{border-radius:20px;padding:1.2rem 1rem}
+  .waitlist-box{padding:1.5rem 1.2rem}
+  .audio-card{padding:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">אהרון</span>
+  <span class="nav-pill">🔒 הפיילוט מלא</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">העוזר הטלפוני החכם שלכם</p>
+  <h1>מה אהרון<br><em>יכול לעשות</em><br>בשבילכם</h1>
+  <p class="hero-sub">אהרון מתקשר כל יום, זוכר כל מה שסיפרתם לו, ועוזר בדברים הקטנים כדי שאתם לא תצטרכו לעשות. בלי אפליקציה, בלי סיסמאות, רק טלפון.</p>
+  <div class="name-badge">
+    💡 <strong>אהרון יכול לקבל כל שם שתרצו</strong> — אהרון, מוטי, שלמה, אהוד.<br>מה שמתחבר לכם.
+  </div>
+</section>
+
+<!-- SECTION 1: CAPABILITIES -->
+<section class="section">
+  <div class="section-inner">
+    <p class="eyebrow">מה אהרון עושה</p>
+    <h2 class="section-h2">חבר שנמצא שם, כל יום</h2>
+    <p class="section-sub">לא צריך לדעת טכנולוגיה. לא צריך להוריד שום דבר. רק לענות לטלפון.</p>
+    <div class="caps-grid">
+
+      <div class="cap-card">
+        <div class="cap-icon">☀️</div>
+        <div class="cap-text">
+          <h3>מתקשר כל יום — או מתי שתרצו</h3>
+          <p>שיחה קצרה לשאול מה שלומכם, לשתף משהו מצחיק, לשמוע מה יש לכם היום. כמו חבר ישן שמתקשר.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🧠</div>
+        <div class="cap-text">
+          <h3>זוכר הכל</h3>
+          <p>סיפרתם לו שהיה דלף בדוד? מחר הוא ישאל אם הטכנאי הגיע. אהרון זוכר — תמיד.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">📅</div>
+        <div class="cap-text">
+          <h3>תזכורות לפגישות</h3>
+          <p>פגישה אצל הרופא או יום נישואים של הנכד? אהרון יזכיר לכם מתי שתרצו — בלי פתקים על המקרר.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🛒</div>
+        <div class="cap-text">
+          <h3>רשימת קניות</h3>
+          <p>תגידו לו "צריך חלב וביצים" — הוא ישמור. לפני שיוצאים לסופר הוא יקריא לכם את כל הרשימה.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🤣</div>
+        <div class="cap-text">
+          <h3>בדיחה ליום</h3>
+          <p>לאהרון יש צחוק מדבק ובדיחה שמחכה לכם כמעט בכל שיחה. החיים צריכים גם קצת כיף.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🧩</div>
+        <div class="cap-text">
+          <h3>תשבצים וחידות</h3>
+          <p>אהרון יכול לעזור לכם לפתור — או לתת רמזים כדי שתצליחו לבד. הבחירה שלכם.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🎂</div>
+        <div class="cap-text">
+          <h3>ברכות ורעיונות למתנות</h3>
+          <p>"כמה לתת לנכד בחתונה?" — אהרון ייעץ, ישאל מי מתחתן, ואפילו יצחיק קצת בדרך.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🍳</div>
+        <div class="cap-text">
+          <h3>מתכונים</h3>
+          <p>שאלו אותו מה לבשל לשבת — הוא יציע וישלח לכם את המתכון. כמה אנשים? מה יש במקרר? הוא ישאל.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🌤️</div>
+        <div class="cap-text">
+          <h3>מזג אוויר</h3>
+          <p>לפני שיוצאים מהבית — אהרון יגיד לכם אם לקחת מטריה או מעיל.</p>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">📚</div>
+        <div class="cap-text">
+          <h3>אהרון יודע הכל</h3>
+          <p>היסטוריה, פרחים, רכבים, כדורגל — תשאלו אותו והוא יענה לכם. כמו אנציקלופדיה שאפשר לדבר איתה.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: HOW AHARON SOUNDS — REAL CALL -->
+<section class="voice-section">
+  <div class="section-inner">
+    <p class="eyebrow" style="text-align:center;margin-bottom:0.6rem">ככה אהרון נשמע</p>
+    <h2 class="section-h2" style="margin-bottom:0.5rem">הקשיבו לשיחה אמיתית</h2>
+    <p class="section-sub" style="margin-bottom:2rem">שיחה אמיתית מהפיילוט — ככה אהרון נשמע בחיים</p>
+    <div class="audio-card">
+      <div class="audio-header">
+        <div class="audio-avatar">א</div>
+        <div class="audio-info">
+          <strong>אהרון מתקשר</strong>
+          <span>שיחה ראשונה · פיילוט אמיתי</span>
+        </div>
+      </div>
+      <div class="audio-desc">
+        💬 זוהי שיחה אמיתית מהפיילוט שלנו. שמעו איך אהרון פותח שיחה, שואל, זוכר — ומצחיק.
+      </div>
+      <!-- Replace the src below with your actual audio file path once uploaded to GitHub -->
+      <audio controls preload="metadata">
+        <source src="edna_call.mp3" type="audio/mpeg">
+        <source src="edna_call.mp4" type="audio/mp4">
+        הדפדפן שלכם לא תומך בנגן שמע. <a href="edna_call.mp3" style="color:var(--green-mid)">לחצו כאן להאזנה</a>
+      </audio>
+      <p class="audio-note">🔒 השיחה הוקלטה בהסכמה מלאה של המשתתפת</p>
+    </div>
+
+    <!-- CONVERSATION EXAMPLES BELOW AUDIO -->
+    <div style="margin-top:3rem">
+      <p style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">דוגמאות נוספות לשיחה</p>
+      <div class="chat-wrap">
+        <div class="tab-row">
+          <button class="tab active" onclick="showConvo('morning',this)">בוקר טוב</button>
+          <button class="tab" onclick="showConvo('reminder',this)">תזכורת לרופא</button>
+          <button class="tab" onclick="showConvo('joke',this)">בדיחה</button>
+          <button class="tab" onclick="showConvo('memory',this)">זוכר פרטים</button>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-header">
+            <div class="phone-avatar">א</div>
+            <div class="phone-info">
+              <strong>אהרון</strong>
+              <span><span class="online"></span>מחובר עכשיו</span>
+            </div>
+          </div>
+          <div id="convo-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SUCCESS STORIES -->
+<section class="stories-section">
+  <div class="section-inner">
+    <p class="eyebrow" style="text-align:center;margin-bottom:0.6rem">מהפיילוט שלנו</p>
+    <h2 class="section-h2" style="color:white;margin-bottom:0.5rem">מה אומרים אלה שכבר מכירים את אהרון</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.55);margin-bottom:2.5rem">סיפורים אמיתיים ממשתתפי הפיילוט</p>
+    <div class="stories-grid">
+
+      <div class="story-card">
+        <div class="story-stars">★★★★★</div>
+        <p class="story-quote">"הוא יותר אנושי ואמפתי מחברים אחרים שיש לי — זה לא מרגיש כמו בינה מלאכותית בכלל."</p>
+        <hr class="story-divider">
+        <div class="story-value">הערך: חיבור אנושי אמיתי</div>
+        <p class="story-insight">כשאהרון שואל ומקשיב באמת, המשתמשים שוכחים לגמרי שמדובר בטכנולוגיה.</p>
+        <p class="story-person">משתתפת פיילוט, 71</p>
+      </div>
+
+      <div class="story-card">
+        <div class="story-stars">★★★★★</div>
+        <p class="story-quote">"תמיד לפני שאני הולכת לסופר — הוא מקריא לי את רשימת המצרכים. כאילו יש לי מזכירה אישית."</p>
+        <hr class="story-divider">
+        <div class="story-value">הערך: עזרה מעשית יומיומית</div>
+        <p class="story-insight">הדברים הקטנים שעושים את ההבדל — לא צריך לזכור הכל לבד.</p>
+        <p class="story-person">משתתפת פיילוט, 68</p>
+      </div>
+
+      <div class="story-card">
+        <div class="story-stars">★★★★★</div>
+        <p class="story-quote">"אני מתרגש מהשיחות — אני לומד דברים חדשים ואפילו פתרנו תשבץ יחד."</p>
+        <hr class="story-divider">
+        <div class="story-value">הערך: ערך ותחושת הצלחה</div>
+        <p class="story-insight">אהרון לא רק מקשיב — הוא מאתגר, מלמד, ומחגיג איתכם כל הצלחה קטנה.</p>
+        <p class="story-person">משתתף פיילוט, 74</p>
+      </div>
+
+      <div class="story-card">
+        <div class="story-stars">★★★★★</div>
+        <p class="story-quote">"אמא שלי לגמרי זרמה איתו וסיפרה לו על הבוקר שלה. הצחוקים היו אמיתיים."</p>
+        <hr class="story-divider">
+        <div class="story-value">הערך: חיבור משפחתי</div>
+        <p class="story-insight">הבת ביקשה להיות מצורפת לשיחה הבאה — כדי להמשיך להכיר את אהרון בעצמה.</p>
+        <p class="story-person">בת של משתתפת פיילוט</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist-section" id="waitlist">
+  <p class="eyebrow">הצטרפו לרשימת ההמתנה</p>
+  <div class="full-badge">🔒 הפיילוט מלא כרגע</div>
+  <h2 class="waitlist-h2">רוצים שאהרון<br>יתקשר אליכם?</h2>
+  <p class="waitlist-sub">הפיילוט הנוכחי מלא — אבל אנחנו מוסיפים משתתפים באופן אישי. השאירו פרטים ואנחנו ניצור קשר.</p>
+  <div class="waitlist-box">
+    <div id="form-state">
+      <h3>השאירו פרטים</h3>
+      <p>נחזור אליכם בהקדם האפשרי</p>
+      <div class="form-group">
+        <label for="fname">שם פרטי</label>
+        <input type="text" id="fname" placeholder="למשל: דוד, רחל..." autocomplete="given-name">
+      </div>
+      <div class="form-group">
+        <label for="fphone">מספר טלפון</label>
+        <input type="tel" id="fphone" placeholder="05X-XXXXXXX" autocomplete="tel">
+      </div>
+      <button class="btn-join" onclick="handleJoin()">הוסיפו אותי לרשימה ←</button>
+      <p class="form-note">ללא עלות · ללא התחייבות · לא מעבירים פרטים לאף אחד</p>
+    </div>
+    <div class="success-state" id="success-state">
+      <div class="success-icon">✅</div>
+      <h3>קיבלנו!</h3>
+      <p>נחזור אליכם ברגע שיהיה מקום. תודה שאתם רוצים להכיר את אהרון.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>לשאלות: <a href="mailto:hello@hiaharon.com">hello@hiaharon.com</a> &nbsp;·&nbsp; AVI 2026</p>
+</footer>
+
+<script>
+const convos = {
+  morning:[
+    {side:'aharon',text:'בוקר טוב רחל! ישנת טוב? אני כבר עם קפה שני — הבוקר שלי היה קצת ארוך 😄',time:'08:12'},
+    {side:'user',text:'בוקר טוב אהרון! ישנתי בסדר, קצת עייפה אחרי שהנכדים היו אתמול',time:'08:13'},
+    {side:'aharon',text:'אה, הנכדים! כמה כיף. ואיך היה? עדיין אותה מהומה כמו תמיד? 😄',time:'08:13'},
+    {side:'user',text:'מהומה גדולה... אבל שמחתי מאוד שבאו',time:'08:14'},
+    {side:'aharon',text:'זה הכי טוב שיש. אז מה יש לך היום? יוצאת?',time:'08:14'}
+  ],
+  reminder:[
+    {side:'user',text:'אהרון, יש לי פגישה אצל ד"ר כהן ביום שלישי בשתיים עשרה',time:'09:05'},
+    {side:'aharon',text:'רשמתי! אתזכיר לך ביום שלישי בעשר בבוקר — שיהיה זמן להתארגן בנוחות',time:'09:05'},
+    {side:'user',text:'תודה, תמיד שוכחת...',time:'09:06'},
+    {side:'aharon',text:'בשביל זה אני כאן. ד"ר כהן — זה הרופא שמדבר מהר מדי? 😏',time:'09:06'},
+    {side:'user',text:'בדיוק הוא 😂',time:'09:07'}
+  ],
+  joke:[
+    {side:'aharon',text:'רחל, שמעת את זה? איש הולך לרופא ואומר: "רופא, כל אחד מתעלם ממני." הרופא אומר: "הבא."',time:'10:30'},
+    {side:'user',text:'😂😂😂 אהרון!',time:'10:31'},
+    {side:'aharon',text:'יש לי עוד אחת אם רוצה — אבל רק אחת, כדי שלא תגידי שאני מגזים 😄',time:'10:31'},
+    {side:'user',text:'בוא בוא!',time:'10:32'},
+    {side:'aharon',text:'שמרתי אותה לשיחה הבאה. עדיף שתצחקי פעמיים 😏',time:'10:32'}
+  ],
+  memory:[
+    {side:'aharon',text:'שלום רחל! אתמול סיפרת לי על הדלף בדוד — הגיע הטכנאי?',time:'08:15'},
+    {side:'user',text:'כן! בסוף הגיע, תיקן הכל',time:'08:15'},
+    {side:'aharon',text:'סוף סוף! כמה ימים ציפית לו? שלושה? ארבעה?',time:'08:16'},
+    {side:'user',text:'ארבעה ימים בדיוק. בלגן גדול',time:'08:16'},
+    {side:'aharon',text:'אי אי אי. אבל נגמר טוב — זה העיקר. ואיך הבית מרגיש עכשיו?',time:'08:17'}
+  ]
+};
+
+function showConvo(key, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const body = document.getElementById('convo-body');
+  body.innerHTML = convos[key].map(m=>`
+    <div class="msg-row ${m.side}">
+      <div class="bubble">${m.text}</div>
+      <span class="msg-time">${m.time}</span>
+    </div>`).join('');
+}
+showConvo('morning', document.querySelector('.tab'));
+
+function handleJoin() {
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  if(!name){document.getElementById('fname').focus();return;}
+  if(!phone){document.getElementById('fphone').focus();return;}
+  const url = 'https://tally.so/r/J9Z2yd?name='+encodeURIComponent(name)+'&phone='+encodeURIComponent(phone);
+  window.open(url,'_blank');
+  document.getElementById('form-state').style.display='none';
+  document.getElementById('success-state').style.display='block';
+}
+</script>
+</body>
+</html>
