@@ -133,6 +133,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 5
 /* Trust section */
 .trust-section{background:var(--cream)}
 .trust-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
 .trust-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center}
 .trust-card-icon{width:44px;height:44px;margin:0 auto 1rem;color:var(--green-mid)}
 .trust-card h3{font-size:1rem;font-weight:600;color:var(--green);margin-bottom:0.5rem}
@@ -191,28 +192,41 @@ footer{background:var(--green);padding:3rem 5%;border-top:1px solid rgba(255,255
 .footer-bottom{max-width:1200px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;font-size:0.78rem;color:rgba(255,255,255,0.35)}
 
 @media(max-width:900px){
-.hero{grid-template-columns:1fr;padding:3rem 5%}
-.hero-visual{display:none}
-.hero h1{font-size:2.6rem}
-[data-lang="en"] .hero h1{font-size:2.2rem}
-.stats-inner{grid-template-columns:repeat(2,1fr)}
+.hero{grid-template-columns:1fr;padding:2rem 5% 3rem;gap:2rem}
+.hero-visual{display:block;min-height:280px}
+.hero-img-frame{max-width:100%;aspect-ratio:16/9;border-radius:16px}
+.float-bubble{display:none}
+.hero h1{font-size:2.4rem}
+[data-lang="en"] .hero h1{font-size:2rem}
 .features-grid{grid-template-columns:repeat(2,1fr)}
 .trust-cards{grid-template-columns:1fr}
 .day-grid,.faq-grid{grid-template-columns:1fr}
 .day-image{display:none}
 .section h2{font-size:2rem}
 [data-lang="en"] .section h2{font-size:1.8rem}
-.trust-inner{gap:1.5rem}
+.trust-inner{gap:0.75rem;flex-wrap:wrap}
+.trust-item{font-size:0.78rem}
 .footer-inner{flex-direction:column;text-align:center}
-.footer-links{gap:2rem}
+.footer-links{gap:1.5rem;flex-wrap:wrap;justify-content:center}
+.stats-inner{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:600px){
-.hero h1{font-size:2rem}
-[data-lang="en"] .hero h1{font-size:1.8rem}
+.hero{padding:1.5rem 5% 2.5rem}
+.hero h1{font-size:1.9rem}
+[data-lang="en"] .hero h1{font-size:1.7rem}
+.hero-img-frame{aspect-ratio:4/3}
 .hero-actions{flex-direction:column}
-.stats-inner{grid-template-columns:1fr}
+.hero-actions a{text-align:center;justify-content:center}
+.hero-checks{gap:0.5rem}
+.features-grid{grid-template-columns:1fr}
+.testimonials-grid{grid-template-columns:1fr}
+.stats-inner{grid-template-columns:repeat(2,1fr);gap:1rem}
+.stat-number{font-size:2rem}
 .cta-actions{flex-direction:column;align-items:center}
-.hero-checks{flex-direction:column;gap:0.5rem}
+nav{padding:0.75rem 4%}
+.nav-cta{padding:0.5rem 0.9rem;font-size:0.8rem}
+.logo-name{font-size:1.1rem}
+.section{padding:2.5rem 5%}
 }
 </style>
 </head>
@@ -305,8 +319,7 @@ footer{background:var(--green);padding:3rem 5%;border-top:1px solid rgba(255,255
 <div class="section-eyebrow" style="margin-bottom:0.5rem;color:rgba(255,255,255,0.5)"><span class="he-only">מה אומרים המשתתפים</span><span class="en-only">From the pilot</span></div>
 <h2 style="font-family:var(--font-he);font-size:2.4rem;font-weight:700;color:var(--white);margin-bottom:0.5rem"><span class="he-only">מה שאומרים על <em style="font-style:normal;color:var(--coral)">אהרון.</em></span><span class="en-only" style="font-family:var(--font-en)">What people say about <em style="font-style:normal;color:var(--coral)">Aharon.</em></span></h2>
 <p style="font-size:1rem;color:rgba(255,255,255,0.7);margin-bottom:2rem"><span class="he-only">משוב אמיתי ממשתתפי הפיילוט.</span><span class="en-only">Real feedback from real pilot participants. Unedited.</span></p>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem">
-
+<div class="testimonials-grid">
 <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.75rem;display:flex;flex-direction:column">
 <div style="color:#f5c842;font-size:1.4rem;letter-spacing:4px;margin-bottom:1rem">★★★★★</div>
 <blockquote style="font-family:var(--font-en);font-size:1rem;color:rgba(255,255,255,0.9);line-height:1.75;font-style:italic;flex:1;margin-bottom:1.25rem;border:none;padding:0"><span class="he-only">"הוא יותר אנושי ואמפתי ממה שציפיתי — זה לא מרגיש כמו בינה מלאכותית בכלל. אני מצפה לשיחות שלנו."</span><span class="en-only">"He's more human and empathetic than some friends I have — it doesn't feel like artificial intelligence at all. I look forward to his calls."</span></blockquote>
@@ -351,7 +364,7 @@ footer{background:var(--green);padding:3rem 5%;border-top:1px solid rgba(255,255
 <div style="display:inline-block;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:12px;margin-top:10px"><span class="he-only">שמחה ועניין</span><span class="en-only">Joy and stimulation</span></div>
 </div>
 </div>
-
+</div>
 </div>
 </div>
 </div>
