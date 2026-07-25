@@ -3,436 +3,507 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>אהרון — העוזר הטלפוני החכם שלכם</title>
-<meta name="description" content="אהרון מתקשר, זוכר ועוזר — כל יום. גלו מה הוא יכול לעשות עבורכם.">
+<title>אהרון — חבר קולי חכם וחם לגיל השלישי</title>
+<meta name="description" content="אהרון הוא חבר קולי חכם וחם למבוגרים בישראל — מתקשר, מקשיב, זוכר ועוזר ביום־יום.">
+<meta property="og:title" content="Aharon — AI voice friend for elderly people">
+<meta property="og:description" content="A warm, smart voice companion that calls elderly people daily, remembers their stories, and helps with everyday tasks.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#073f37">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#073f37;--green-mid:#0f6e56;--green-light:#1d9e75;--green-pale:#e1f5ee;
-  --cream:#faf8f4;--cream-dark:#f0ece3;--text:#1a1a1a;--text-mid:#3d3d3a;
-  --text-muted:#6b6b67;--gold:#c8a85e;--white:#ffffff;
+--green:#073f37;
+--green-mid:#0f6e56;
+--green-light:#e8f5ee;
+--coral:#d4734a;
+--cream:#f6f3ec;
+--cream-dark:#edeade;
+--white:#ffffff;
+--text:#1a1a1a;
+--text-mid:#4a4a4a;
+--text-muted:#7a7a7a;
+--border:#e0dbd0;
+--font-he:'Frank Ruhl Libre', serif;
+--font-en:'Lora', serif;
+--font-body:'Inter', sans-serif;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Assistant',sans-serif;background:var(--cream);color:var(--text);direction:rtl;text-align:right;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);background:var(--cream);color:var(--text);line-height:1.6;overflow-x:hidden}
+.he-only{display:inline}
+.en-only{display:none}
+[data-lang="en"] .he-only{display:none}
+[data-lang="en"] .en-only{display:inline}
+[data-lang="en"]{direction:ltr}
+[data-lang="en"] .rtl-flip{direction:ltr;text-align:left}
+[data-lang="he"] .rtl-flip{direction:rtl;text-align:right}
 
-/* NAV */
-nav{background:var(--green);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Frank Ruhl Libre',serif;font-size:1.5rem;font-weight:700;color:var(--white)}
-.nav-pill{background:rgba(200,168,94,0.15);color:var(--gold);border:1px solid rgba(200,168,94,0.3);font-size:0.8rem;font-weight:700;padding:0.35rem 0.9rem;border-radius:50px;letter-spacing:0.04em}
+/* Nav */
+nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 5%;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:42px;height:42px;background:var(--green);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:24px;height:24px}
+.logo-text{display:flex;flex-direction:column}
+.logo-name{font-family:var(--font-he);font-size:1.3rem;font-weight:700;color:var(--green);line-height:1.1}
+[data-lang="en"] .logo-name{font-family:var(--font-en)}
+.logo-tagline{font-size:0.7rem;color:var(--text-muted)}
+.nav-right{display:flex;align-items:center;gap:1.25rem}
+.lang-toggle{display:flex;background:var(--cream);border-radius:8px;overflow:hidden;border:1px solid var(--border)}
+.lang-btn{padding:0.4rem 0.9rem;font-size:0.82rem;font-weight:500;border:none;background:transparent;cursor:pointer;color:var(--text-mid);transition:all 0.2s;font-family:var(--font-body)}
+.lang-btn.active{background:var(--green);color:var(--white)}
+.nav-cta{background:var(--green);color:var(--white);padding:0.6rem 1.5rem;border-radius:8px;font-size:0.88rem;font-weight:500;text-decoration:none;transition:background 0.2s;border:none;cursor:pointer}
+.nav-cta:hover{background:var(--green-mid)}
 
-/* HERO */
-.hero{background:var(--green);color:var(--white);padding:5rem 1.5rem 5rem;text-align:center}
-.hero-eyebrow{display:inline-block;font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
-.hero h1{font-family:'Frank Ruhl Libre',serif;font-size:clamp(2.2rem,6vw,3.8rem);font-weight:900;line-height:1.2;margin-bottom:1.2rem;color:var(--white)}
-.hero h1 em{color:var(--gold);font-style:normal}
-.hero-sub{font-size:clamp(1rem,2.5vw,1.2rem);font-weight:300;color:rgba(255,255,255,0.75);max-width:540px;margin:0 auto;line-height:1.8}
+/* Hero */
+.hero{max-width:1200px;margin:0 auto;padding:5rem 5% 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green-light);color:var(--green-mid);font-size:0.82rem;font-weight:500;padding:0.45rem 1.1rem;border-radius:24px;margin-bottom:2rem}
+.badge-dot{width:8px;height:8px;background:var(--coral);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:var(--font-he);font-size:3.8rem;font-weight:700;color:var(--green);line-height:1.15;margin-bottom:1.5rem}
+[data-lang="en"] .hero h1{font-family:var(--font-en);font-size:3.2rem}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.hero-sub{font-size:1.1rem;color:var(--text-mid);line-height:1.8;margin-bottom:2rem;max-width:500px}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--white);padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s}
+.btn-primary:hover{background:var(--green-mid)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--green);padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:500;text-decoration:none;border:1.5px solid var(--green);cursor:pointer;transition:all 0.2s}
+.btn-outline:hover{background:var(--green-light)}
+.hero-checks{display:flex;gap:1.5rem;flex-wrap:wrap}
+.hero-check{display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--text-mid)}
+.hero-check svg{color:var(--green-mid);flex-shrink:0}
 
-/* NAME BADGE */
-.name-badge{display:inline-block;margin-top:1.8rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:0.65rem 1.2rem;font-size:0.9rem;color:rgba(255,255,255,0.7);line-height:1.6}
-.name-badge strong{color:var(--gold)}
+/* Hero visual */
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:420px}
+.hero-img-frame{width:100%;max-width:480px;aspect-ratio:4/5;background:linear-gradient(135deg,var(--green-light) 0%,#d4e8df 100%);border-radius:24px;overflow:hidden;position:relative}
+.hero-img-frame img{width:100%;height:100%;object-fit:cover}
+.hero-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--green-mid)}
+.hero-img-placeholder svg{width:64px;height:64px;opacity:0.3}
+.hero-img-placeholder span{font-size:0.85rem;opacity:0.5}
+.float-bubble{position:absolute;background:var(--white);border-radius:14px;padding:0.7rem 1rem;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,0.08);font-size:0.85rem;z-index:10;white-space:nowrap}
+.float-bubble.top-left{top:40px;left:-30px}
+.float-bubble.bottom-right{bottom:60px;right:-20px}
+.bubble-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bubble-icon.green{background:var(--green-light);color:var(--green-mid)}
+.bubble-icon.coral{background:#fce8e0;color:var(--coral)}
+.bubble-text strong{display:block;font-size:0.78rem;color:var(--text-muted);font-weight:500}
 
-/* SECTION SHARED */
-.section{padding:4.5rem 1.5rem}
-.section-inner{max-width:880px;margin:0 auto}
-.eyebrow{font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green-light);text-align:center;margin-bottom:0.6rem}
-.section-h2{font-family:'Frank Ruhl Libre',serif;font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;text-align:center;color:var(--green);line-height:1.25;margin-bottom:0.5rem}
-.section-sub{text-align:center;color:var(--text-muted);font-size:1rem;margin-bottom:3rem;max-width:520px;margin-right:auto;margin-left:auto}
+/* Trust bar */
+.trust-bar{background:var(--cream-dark);padding:1.25rem 5%;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.trust-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:0.82rem;color:var(--text-mid);font-weight:500}
+.trust-dot{width:6px;height:6px;background:var(--coral);border-radius:50%}
 
-/* CAPABILITIES */
-.caps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;align-items:stretch}
-.cap-card{background:var(--white);border:1px solid #e8e4db;border-radius:16px;padding:1.5rem 1.4rem;display:flex;gap:1rem;align-items:flex-start;height:100%}
-.cap-icon{width:46px;height:46px;border-radius:12px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:1.35rem;flex-shrink:0}
-.cap-text h3{font-family:'Frank Ruhl Libre',serif;font-size:1.05rem;font-weight:700;color:var(--green);margin-bottom:0.3rem}
-.cap-text p{font-size:0.88rem;color:var(--text-mid);line-height:1.6}
+/* Stats */
+.stats-section{background:var(--green);padding:3.5rem 5%}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-number{font-family:var(--font-en);font-size:2.6rem;font-weight:600;color:#c9a96e;display:block}
+.stat-label{font-size:0.85rem;color:rgba(255,255,255,0.7);margin-top:0.3rem;line-height:1.4}
 
-/* VOICE SECTION */
-.voice-section{background:var(--cream-dark);padding:4.5rem 1.5rem}
-.audio-card{max-width:540px;margin:0 auto;background:var(--white);border:1px solid #e0dbd0;border-radius:20px;padding:1.8rem;box-shadow:0 4px 24px rgba(7,63,55,0.08)}
-.audio-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
-.audio-avatar{width:52px;height:52px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Frank Ruhl Libre',serif;font-size:1.2rem;font-weight:700;color:var(--white);flex-shrink:0}
-.audio-info strong{display:block;font-size:1rem;font-weight:700;color:var(--text)}
-.audio-info span{font-size:0.8rem;color:var(--text-muted)}
-.audio-desc{font-size:0.9rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.2rem;padding:0.8rem;background:var(--green-pale);border-radius:10px;border-right:3px solid var(--green-light)}
-audio{width:100%;border-radius:10px;outline:none}
-audio::-webkit-media-controls-panel{background:var(--green-pale)}
-.audio-note{font-size:0.78rem;color:var(--text-muted);text-align:center;margin-top:0.8rem}
+/* Sections */
+.section{max-width:1200px;margin:0 auto;padding:5rem 5%}
+.section-eyebrow{font-size:0.82rem;font-weight:600;color:var(--green-mid);margin-bottom:0.75rem}
+.section h2{font-family:var(--font-he);font-size:2.8rem;font-weight:700;color:var(--green);line-height:1.2;margin-bottom:0.75rem}
+[data-lang="en"] .section h2{font-family:var(--font-en);font-size:2.4rem}
+.section h2 em{font-style:normal;color:var(--coral)}
+.section-sub{font-size:1.05rem;color:var(--text-mid);max-width:560px;line-height:1.7}
 
-/* CONVERSATION TABS */
-.convo-section{background:var(--white);padding:4.5rem 1.5rem}
-.chat-wrap{max-width:540px;margin:0 auto}
-.phone-frame{background:var(--cream);border:1px solid #e0dbd0;border-radius:28px;padding:1.4rem 1.2rem;box-shadow:0 8px 40px rgba(7,63,55,0.08)}
-.phone-header{display:flex;align-items:center;gap:0.7rem;padding-bottom:1rem;border-bottom:1px solid #e8e4db;margin-bottom:1.2rem}
-.phone-avatar{width:42px;height:42px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Frank Ruhl Libre',serif;font-size:1.1rem;font-weight:700;color:var(--white);flex-shrink:0}
-.phone-info strong{display:block;font-size:0.95rem;font-weight:700;color:var(--text)}
-.phone-info span{font-size:0.75rem;color:var(--text-muted)}
-.online{display:inline-block;width:6px;height:6px;background:#4ade80;border-radius:50%;margin-left:4px;vertical-align:middle}
-.msg-row{display:flex;margin-bottom:0.85rem;gap:0.5rem}
-.msg-row.aharon{flex-direction:row}
-.msg-row.user{flex-direction:row-reverse}
-.bubble{max-width:80%;padding:0.6rem 0.95rem;border-radius:16px;font-size:0.9rem;line-height:1.6}
-.msg-row.aharon .bubble{background:var(--white);color:var(--text);border-bottom-right-radius:4px;border:1px solid #e8e4db}
-.msg-row.user .bubble{background:var(--green);color:var(--white);border-bottom-left-radius:4px}
-.msg-time{font-size:0.68rem;color:var(--text-muted);align-self:flex-end;white-space:nowrap}
-.tab-row{display:flex;gap:0.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
-.tab{font-size:0.8rem;font-weight:600;padding:0.35rem 0.85rem;border-radius:50px;border:1.5px solid #ddd;background:transparent;color:var(--text-muted);cursor:pointer;font-family:'Assistant',sans-serif;transition:all 0.18s}
-.tab.active{background:var(--green);color:var(--white);border-color:var(--green)}
+/* Day timeline */
+.day-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:center}
+.day-timeline{display:flex;flex-direction:column;gap:0}
+.day-item{display:flex;gap:1.25rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.day-item:last-child{border-bottom:none}
+.day-time{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:56px}
+.day-time-icon{width:40px;height:40px;background:var(--green-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.day-time span{font-size:0.78rem;font-weight:600;color:var(--text-muted)}
+.day-content h3{font-size:1rem;font-weight:600;color:var(--green);margin-bottom:0.3rem}
+.day-content p{font-size:0.9rem;color:var(--text-mid);line-height:1.6}
+.day-image{border-radius:20px;overflow:hidden;background:linear-gradient(135deg,var(--green-light) 0%,#d4e8df 100%);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;position:relative}
+.day-image-quote{position:absolute;bottom:24px;left:24px;right:24px;background:rgba(255,255,255,0.95);border-radius:12px;padding:1rem 1.25rem;font-family:var(--font-he);font-size:0.9rem;color:var(--text);text-align:center}
+[data-lang="en"] .day-image-quote{font-family:var(--font-en);font-style:italic}
 
-/* STORIES */
-.stories-section{background:var(--green);padding:4.5rem 1.5rem}
-.stories-section .eyebrow{color:var(--gold)}
-.stories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:880px;margin:0 auto}
-.story-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.5rem 1.4rem}
-.story-stars{color:var(--gold);font-size:0.9rem;letter-spacing:0.05em;margin-bottom:0.8rem}
-.story-quote{font-size:0.95rem;color:rgba(255,255,255,0.88);line-height:1.75;margin-bottom:1rem;font-style:italic}
-.story-divider{border:none;border-top:1px solid rgba(255,255,255,0.1);margin-bottom:0.8rem}
-.story-value{font-size:0.78rem;font-weight:700;color:var(--gold);margin-bottom:0.2rem;text-transform:uppercase;letter-spacing:0.06em}
-.story-insight{font-size:0.84rem;color:rgba(255,255,255,0.5);line-height:1.55}
-.story-person{font-size:0.78rem;color:rgba(255,255,255,0.35);margin-top:0.7rem}
+/* Features */
+.features-bg{background:var(--white);padding:5rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3rem}
+.feature-card{background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:1.75rem}
+.feature-icon{font-size:1.6rem;margin-bottom:0.75rem;display:block}
+.feature-card h3{font-size:1rem;font-weight:600;color:var(--green);margin-bottom:0.4rem}
+.feature-card p{font-size:0.88rem;color:var(--text-mid);line-height:1.65}
 
-/* WAITLIST */
-.waitlist-section{background:var(--green);padding:5rem 1.5rem;text-align:center}
-.waitlist-section .eyebrow{color:var(--gold)}
-.full-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,168,94,0.15);border:1px solid rgba(200,168,94,0.3);color:var(--gold);font-size:0.82rem;font-weight:700;padding:0.4rem 1.1rem;border-radius:50px;margin-bottom:1.4rem;letter-spacing:0.04em}
-.waitlist-h2{font-family:'Frank Ruhl Libre',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:var(--white);margin-bottom:0.7rem;line-height:1.25}
-.waitlist-sub{color:rgba(255,255,255,0.65);font-size:1rem;margin-bottom:2.2rem;max-width:460px;margin-right:auto;margin-left:auto}
-.waitlist-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:2rem;max-width:420px;margin:0 auto}
-.waitlist-box h3{font-family:'Frank Ruhl Libre',serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}
-.waitlist-box p{font-size:0.88rem;color:rgba(255,255,255,0.55);margin-bottom:1.4rem}
-.form-group{margin-bottom:0.8rem;text-align:right}
-.form-group label{display:block;font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.7);margin-bottom:0.3rem}
-.form-group input{width:100%;padding:0.7rem 1rem;border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;font-family:'Assistant',sans-serif;font-size:1rem;color:var(--white);background:rgba(255,255,255,0.08);transition:border-color 0.2s;direction:rtl;text-align:right}
-.form-group input:focus{outline:none;border-color:var(--gold)}
-.form-group input::placeholder{color:rgba(255,255,255,0.3)}
-.form-group input[type="tel"]{direction:ltr;text-align:left}
-.btn-join{width:100%;padding:0.85rem;background:var(--gold);color:var(--green);border:none;border-radius:10px;font-family:'Assistant',sans-serif;font-size:1.05rem;font-weight:700;cursor:pointer;margin-top:0.3rem;transition:opacity 0.2s,transform 0.15s}
-.btn-join:hover{opacity:0.88}
-.btn-join:active{transform:scale(0.98)}
-.form-note{font-size:0.75rem;color:rgba(255,255,255,0.35);text-align:center;margin-top:0.8rem}
-.success-state{display:none;text-align:center;padding:1.5rem 1rem}
-.success-icon{font-size:2.5rem;margin-bottom:0.8rem}
-.success-state h3{font-family:'Frank Ruhl Libre',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:0.4rem}
-.success-state p{font-size:0.9rem;color:rgba(255,255,255,0.6)}
+/* Trust section */
+.trust-section{background:var(--cream)}
+.trust-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.trust-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:2rem;text-align:center}
+.trust-card-icon{width:44px;height:44px;margin:0 auto 1rem;color:var(--green-mid)}
+.trust-card h3{font-size:1rem;font-weight:600;color:var(--green);margin-bottom:0.5rem}
+.trust-card p{font-size:0.88rem;color:var(--text-mid);line-height:1.65}
 
-footer{background:#041f1b;color:rgba(255,255,255,0.35);text-align:center;padding:1.4rem 1rem;font-size:0.8rem}
-footer a{color:rgba(255,255,255,0.4);text-decoration:none}
+/* Audio */
+.audio-section{background:var(--green);padding:4rem 5%;position:relative;overflow:hidden}
+.audio-inner{max-width:800px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.audio-inner .section-eyebrow{color:rgba(255,255,255,0.5)}
+.audio-inner h2{color:var(--white)}
+.audio-inner h2 em{color:var(--coral)}
+.audio-inner .section-sub{color:rgba(255,255,255,0.7);margin:0 auto 2rem}
+.audio-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:2rem}
+.audio-label{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:8px}
+.audio-label::before{content:'';width:8px;height:8px;background:var(--coral);border-radius:50%}
+audio{width:100%;border-radius:8px;margin-bottom:0.75rem}
+.audio-note{font-size:0.78rem;color:rgba(255,255,255,0.35)}
 
+/* FAQ */
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;align-items:start}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0;cursor:pointer;gap:1rem}
+.faq-q h3{font-size:0.95rem;font-weight:600;color:var(--text)}
+.faq-q svg{flex-shrink:0;transition:transform 0.3s;color:var(--text-muted)}
+.faq-item.open .faq-q svg{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a p{font-size:0.9rem;color:var(--text-mid);line-height:1.7;padding-bottom:1.25rem}
+
+/* CTA */
+.cta-section{background:var(--green);padding:5rem 5%;text-align:center}
+.cta-inner{max-width:700px;margin:0 auto}
+.cta-icon{width:56px;height:56px;background:rgba(255,255,255,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.cta-inner h2{color:var(--white);margin-bottom:0.5rem}
+.cta-inner h2 em{color:var(--coral)}
+.cta-inner .section-sub{color:rgba(255,255,255,0.7);margin:0 auto 2rem}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.btn-white{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--green);padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s}
+.btn-white-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--white);padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:500;text-decoration:none;border:1.5px solid rgba(255,255,255,0.3);cursor:pointer;transition:all 0.2s}
+.cta-note{font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:1rem}
+
+/* Footer */
+footer{background:var(--green);padding:3rem 5%;border-top:1px solid rgba(255,255,255,0.08)}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.footer-brand{display:flex;align-items:center;gap:12px}
+.footer-logo-icon{width:36px;height:36px;background:rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.footer-text{max-width:280px}
+.footer-text strong{display:block;color:var(--white);font-size:0.95rem;font-family:var(--font-he)}
+[data-lang="en"] .footer-text strong{font-family:var(--font-en)}
+.footer-text span{font-size:0.78rem;color:rgba(255,255,255,0.5);line-height:1.5}
+.footer-links{display:flex;gap:2.5rem}
+.footer-col strong{display:block;color:var(--white);font-size:0.82rem;margin-bottom:0.75rem}
+.footer-col a{display:block;color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.82rem;margin-bottom:0.5rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{max-width:1200px;margin:1.5rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;font-size:0.78rem;color:rgba(255,255,255,0.35)}
+
+@media(max-width:900px){
+.hero{grid-template-columns:1fr;padding:3rem 5%}
+.hero-visual{display:none}
+.hero h1{font-size:2.6rem}
+[data-lang="en"] .hero h1{font-size:2.2rem}
+.stats-inner{grid-template-columns:repeat(2,1fr)}
+.features-grid{grid-template-columns:repeat(2,1fr)}
+.trust-cards{grid-template-columns:1fr}
+.day-grid,.faq-grid{grid-template-columns:1fr}
+.day-image{display:none}
+.section h2{font-size:2rem}
+[data-lang="en"] .section h2{font-size:1.8rem}
+.trust-inner{gap:1.5rem}
+.footer-inner{flex-direction:column;text-align:center}
+.footer-links{gap:2rem}
+}
 @media(max-width:600px){
-  nav{padding:0.8rem 1.2rem}
-  .hero{padding:3.5rem 1.2rem}
-  .section,.stories-section,.voice-section,.convo-section,.waitlist-section{padding:3rem 1.2rem}
-  .phone-frame{border-radius:20px;padding:1.2rem 1rem}
-  .waitlist-box{padding:1.5rem 1.2rem}
-  .audio-card{padding:1.2rem}
+.hero h1{font-size:2rem}
+[data-lang="en"] .hero h1{font-size:1.8rem}
+.hero-actions{flex-direction:column}
+.stats-inner{grid-template-columns:1fr}
+.cta-actions{flex-direction:column;align-items:center}
+.hero-checks{flex-direction:column;gap:0.5rem}
 }
 </style>
 </head>
-<body>
+<body data-lang="he">
 
-<!-- NAV -->
 <nav>
-  <span class="nav-logo">אהרון</span>
-  <span class="nav-pill">🔒 הפיילוט מלא</span>
+<a href="/" class="nav-logo">
+<div class="logo-icon" style="font-size:1.4rem;background:none">🇮🇱</div>
+<div class="logo-text">
+<span class="logo-name"><span class="he-only">אהרון</span><span class="en-only">Aharon</span></span>
+<span class="logo-tagline"><span class="he-only">תמיד שמח לשמוע</span><span class="en-only">Always happy to hear from you</span></span>
+</div>
+</a>
+<div class="nav-right">
+<div class="lang-toggle">
+<button class="lang-btn" data-lang-btn="en">EN</button>
+<button class="lang-btn active" data-lang-btn="he">עב</button>
+</div>
+<a href="https://tally.so/r/J9Z2yd" class="nav-cta">
+<span class="he-only">הצטרפו לרשימת ההמתנה ←</span>
+<span class="en-only">Join the waitlist →</span>
+</a>
+</div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-eyebrow">העוזר הטלפוני החכם שלכם</p>
-  <h1>מה אהרון<br><em>יכול לעשות</em><br>בשבילכם</h1>
-  <p class="hero-sub">אהרון מתקשר כל יום, זוכר כל מה שסיפרתם לו, ועוזר בדברים הקטנים כדי שאתם לא תצטרכו לעשות. בלי אפליקציה, בלי סיסמאות, רק טלפון.</p>
-  <div class="name-badge">
-    💡 <strong>אהרון יכול לקבל כל שם שתרצו</strong> — אהרון, מוטי, שלמה, אהוד.<br>מה שמתחבר לכם.
-  </div>
-</section>
+<!-- Hero -->
+<div style="background:var(--white)">
+<div class="hero">
+<div class="rtl-flip">
+<div class="hero-badge"><span class="badge-dot"></span> <span class="he-only">🔒 הפיילוט מלא — הצטרפו לרשימת ההמתנה</span><span class="en-only">🔒 Pilot is full — join the waitlist</span></div>
+<h1>
+<span class="he-only">יש מי שתמיד שמח <em>לשמוע.</em></span>
+<span class="en-only">Someone who's always <em>happy to hear from you.</em></span>
+</h1>
+<p class="hero-sub">
+<span class="he-only">אהרון הוא בן־שיח קולי חכם וחם, שמתקשר, מקשיב, זוכר ועוזר ביום־יום — כדי שאף אחד לא ירגיש לבד, וכדי שהמשפחה תרגיש קרובה גם מרחוק.</span>
+<span class="en-only">Aharon is a warm, smart AI voice friend who calls elderly people every morning, remembers their stories, and helps with daily tasks — so no one feels alone, and families feel close even from far away.</span>
+</p>
+<div class="hero-actions">
+<a href="https://tally.so/r/J9Z2yd" class="btn-primary">
+<span class="he-only">← הצטרפו לפיילוט</span>
+<span class="en-only">Join the pilot →</span>
+</a>
+<a href="#listen" class="btn-outline">
+<span class="he-only">⏵ איך זה נשמע?</span>
+<span class="en-only">⏵ Hear a real call</span>
+</a>
+</div>
+<div class="hero-checks">
+<span class="hero-check"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> <span class="he-only">בלי אפליקציה</span><span class="en-only">No app needed</span></span>
+<span class="hero-check"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> <span class="he-only">שיחה בעברית</span><span class="en-only">Speaks Hebrew</span></span>
+<span class="hero-check"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> <span class="he-only">פרטיות מלאה</span><span class="en-only">Full privacy</span></span>
+</div>
+</div>
+<div class="hero-visual">
+<div class="hero-img-frame">
+<img src="images/hero-man.jpg" alt="Elderly man speaking on phone with Aharon" style="width:100%;height:100%;object-fit:cover">
+</div>
+<div class="float-bubble top-left">
+<div class="bubble-icon coral">❤️</div>
+<div class="bubble-text">
+<strong class="he-only">אהרון זכר לשאול</strong><strong class="en-only">Aharon remembered</strong>
+<span class="he-only">על הטיול של יעל</span><span class="en-only">about Yael's trip</span>
+</div>
+</div>
+<div class="float-bubble bottom-right">
+<div class="bubble-icon green">📞</div>
+<div class="bubble-text">
+<strong class="he-only">שיחה עם אהרון</strong><strong class="en-only">Call with Aharon</strong>
+<span class="he-only">12:48 דקות של יחד</span><span class="en-only">12:48 minutes together</span>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-<!-- SECTION 1: CAPABILITIES -->
-<section class="section">
-  <div class="section-inner">
-    <p class="eyebrow">מה אהרון עושה</p>
-    <h2 class="section-h2">חבר שנמצא שם, כל יום</h2>
-    <p class="section-sub">לא צריך לדעת טכנולוגיה. לא צריך להוריד שום דבר. רק לענות לטלפון.</p>
-    <div class="caps-grid">
+<!-- Trust bar -->
+<div class="trust-bar">
+<div class="trust-inner">
+<span class="trust-item"><span class="trust-dot"></span> <span class="he-only">שיחה טבעית בעברית</span><span class="en-only">Natural Hebrew conversation</span></span>
+<span class="trust-item"><span class="trust-dot"></span> <span class="he-only">בלי מצלמות בבית</span><span class="en-only">No cameras at home</span></span>
+<span class="trust-item"><span class="trust-dot"></span> <span class="he-only">מותאם לקצב האישי</span><span class="en-only">Adapted to personal pace</span></span>
+<span class="trust-item"><span class="trust-dot"></span> <span class="he-only">זיכרון שנשאר בשליטה</span><span class="en-only">Memory you control</span></span>
+<span class="trust-item"><span class="trust-dot"></span> <span class="he-only">מחבר בין הדורות</span><span class="en-only">Connecting generations</span></span>
+<span class="trust-item"><span class="trust-dot"></span> <span class="he-only">נבנה באהבה בישראל</span><span class="en-only">Built with love in Israel</span></span>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">☀️</div>
-        <div class="cap-text">
-          <h3>מתקשר כל יום — או מתי שתרצו</h3>
-          <p>שיחה קצרה לשאול מה שלומכם, לשתף משהו מצחיק, לשמוע מה יש לכם היום. כמו חבר ישן שמתקשר.</p>
-        </div>
-      </div>
+<!-- Stats -->
+<div class="stats-section">
+<div class="stats-inner">
+<div><span class="stat-number">18</span><div class="stat-label"><span class="he-only">מבוגרים בפיילוט חי</span><span class="en-only">Elderly users in live pilot</span></div></div>
+<div><span class="stat-number"><span class="he-only">30 דקות</span><span class="en-only">30 min</span></span><div class="stat-label"><span class="he-only">השיחה הארוכה ביותר — לא רצתה לסיים</span><span class="en-only">Longest call — she didn't want to stop</span></div></div>
+<div><span class="stat-number">45</span><div class="stat-label"><span class="he-only">הודעות וואטסאפ ממשתמשת אחת בשבוע</span><span class="en-only">WhatsApp messages from one user in a week</span></div></div>
+<div><span class="stat-number">5×</span><div class="stat-label"><span class="he-only">תזכורות בממוצע לשבוע למשתמש</span><span class="en-only">Reminders per user per week on average</span></div></div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">🧠</div>
-        <div class="cap-text">
-          <h3>זוכר הכל</h3>
-          <p>סיפרתם לו שהיה דלף בדוד? מחר הוא ישאל אם הטכנאי הגיע. אהרון זוכר — תמיד.</p>
-        </div>
-      </div>
+<!-- Day with Aharon -->
+<div class="section rtl-flip">
+<div class="section-eyebrow"><span class="he-only">יום רגיל, עם קצת יותר יחד</span><span class="en-only">A regular day, with a little more togetherness</span></div>
+<h2><span class="he-only">אהרון משתלב בחיים. <em>לא מפריע להם.</em></span><span class="en-only">Aharon fits into life. <em>Never interrupts it.</em></span></h2>
+<div class="day-grid">
+<div class="day-timeline">
+<div class="day-item">
+<div class="day-time"><div class="day-time-icon">☀️</div><span>08:30</span></div>
+<div class="day-content">
+<h3><span class="he-only">בוקר טוב, רבקה</span><span class="en-only">Good morning, Rivka</span></h3>
+<p><span class="he-only">שיחה קצרה עם מזג האוויר, התוכניות להיום ושאלה שממשיכה מאתמול.</span><span class="en-only">A short call with weather, today's plans, and a follow-up question from yesterday's conversation.</span></p>
+</div>
+</div>
+<div class="day-item">
+<div class="day-time"><div class="day-time-icon">⏰</div><span>11:00</span></div>
+<div class="day-content">
+<h3><span class="he-only">תזכורת בזמן הנכון</span><span class="en-only">Reminder at the right time</span></h3>
+<p><span class="he-only">אהרון מזכיר בעדינות את התור ובודק אם תרצי לעדכן את רשימת הקניות.</span><span class="en-only">Aharon gently reminds about the appointment and checks if she wants to update her shopping list.</span></p>
+</div>
+</div>
+<div class="day-item">
+<div class="day-time"><div class="day-time-icon">🌤️</div><span>16:30</span></div>
+<div class="day-content">
+<h3><span class="he-only">קצת עניין אחר הצהריים</span><span class="en-only">A bit of interest in the afternoon</span></h3>
+<p><span class="he-only">חידה, סיפור מהארץ או שיחה על שיר ישן — לפי מה שמתאים באותו יום.</span><span class="en-only">A puzzle, a story from Israel, or a chat about an old song — whatever fits the day.</span></p>
+</div>
+</div>
+<div class="day-item">
+<div class="day-time"><div class="day-time-icon">🌙</div><span>20:00</span></div>
+<div class="day-content">
+<h3><span class="he-only">המשפחה קרובה</span><span class="en-only">Family stays close</span></h3>
+<p><span class="he-only">עדכון קצר נותן למשפחה שקט, בלי לפגוע בעצמאות או בפרטיות.</span><span class="en-only">A brief update gives the family peace of mind, without compromising independence or privacy.</span></p>
+</div>
+</div>
+</div>
+<div class="day-image">
+<img src="images/woman-kitchen.jpg" alt="Elderly woman speaking with Aharon in her kitchen" style="width:100%;height:100%;object-fit:cover">
+<div class="day-image-quote">
+<span class="he-only">"אני לא צריכה לזכור איך מפעילים אותו. הוא פשוט מתקשר אליי."</span>
+<span class="en-only">"I don't need to remember how to use it. He just calls me."</span>
+</div>
+</div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">📅</div>
-        <div class="cap-text">
-          <h3>תזכורות לפגישות</h3>
-          <p>פגישה אצל הרופא או יום נישואים של הנכד? אהרון יזכיר לכם מתי שתרצו — בלי פתקים על המקרר.</p>
-        </div>
-      </div>
+<!-- Features -->
+<div class="features-bg">
+<div class="section rtl-flip">
+<div class="section-eyebrow"><span class="he-only">מה אהרון יודע לעשות</span><span class="en-only">What Aharon can do</span></div>
+<h2><span class="he-only">חבר שנמצא שם, <em>כל יום.</em></span><span class="en-only">A friend who's there, <em>every day.</em></span></h2>
+<p class="section-sub"><span class="he-only">לא צריך לדעת טכנולוגיה. לא צריך להוריד שום דבר. רק לענות לטלפון.</span><span class="en-only">No tech skills needed. Nothing to download. Just answer the phone.</span></p>
+<div class="features-grid">
+<div class="feature-card"><span class="feature-icon">☀️</span><h3><span class="he-only">מתקשר כל יום</span><span class="en-only">Calls every day</span></h3><p><span class="he-only">שיחה קצרה לשאול מה שלומכם, לשתף משהו מצחיק, לשמוע מה יש לכם היום.</span><span class="en-only">A short call to ask how you are, share something funny, and hear about your day. Like an old friend calling.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🧠</span><h3><span class="he-only">זוכר הכל</span><span class="en-only">Remembers everything</span></h3><p><span class="he-only">סיפרתם לו שהיה דלף בדוד? מחר הוא ישאל אם הטכנאי הגיע. אהרון זוכר — תמיד.</span><span class="en-only">Told him about the boiler leak? Tomorrow he'll ask if the plumber came. Aharon remembers — always.</span></p></div>
+<div class="feature-card"><span class="feature-icon">📅</span><h3><span class="he-only">תזכורות</span><span class="en-only">Reminders</span></h3><p><span class="he-only">פגישה אצל הרופא או יום נישואים של הנכד? אהרון יזכיר לכם מתי שתרצו.</span><span class="en-only">Doctor's appointment or grandchild's anniversary? Aharon reminds you exactly when you need it.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🛒</span><h3><span class="he-only">רשימת קניות</span><span class="en-only">Shopping lists</span></h3><p><span class="he-only">תגידו לו "צריך חלב וביצים" — הוא ישמור. לפני שיוצאים לסופר הוא יקריא את הרשימה.</span><span class="en-only">"I need milk and eggs" — he saves it. Before you leave for the store, he reads back the full list.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🌙</span><h3><span class="he-only">לילה טוב בוואטסאפ</span><span class="en-only">Goodnight on WhatsApp</span></h3><p><span class="he-only">כל ערב הודעת לילה טוב. ואם צריכים אותו — זמין 24/7. תמיד שמח לשמוע.</span><span class="en-only">Every evening, a goodnight message. And he's available 24/7 if needed — always happy to talk.</span></p></div>
+<div class="feature-card"><span class="feature-icon">😄</span><h3><span class="he-only">אישיות והומור</span><span class="en-only">Personality and humor</span></h3><p><span class="he-only">בדיחה כמעט בכל שיחה. צחוק מדבק. דעות על החדשות. הוא מרגיש כמו חבר, לא שירות.</span><span class="en-only">A joke in almost every call. An infectious laugh. Opinions on the news. He feels like a friend, not a service.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🌤️</span><h3><span class="he-only">מזג אוויר</span><span class="en-only">Weather</span></h3><p><span class="he-only">לפני שיוצאים מהבית — אהרון יגיד לכם אם לקחת מטריה או מעיל.</span><span class="en-only">Before you leave the house — Aharon tells you whether to take an umbrella or a coat.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🍳</span><h3><span class="he-only">מתכונים</span><span class="en-only">Recipes</span></h3><p><span class="he-only">שאלו אותו מה לבשל לשבת — הוא יציע וישלח לכם את המתכון. כמה אנשים? מה יש במקרר? הוא ישאל.</span><span class="en-only">Ask him what to cook for Shabbat — he'll suggest and send you the recipe. How many people? What's in the fridge? He'll ask.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🧩</span><h3><span class="he-only">תשבצים וחידות</span><span class="en-only">Puzzles and riddles</span></h3><p><span class="he-only">אהרון יכול לעזור לכם לפתור — או לתת רמזים כדי שתצליחו לבד. הבחירה שלכם.</span><span class="en-only">Aharon can help you solve puzzles — or give hints so you figure it out yourself. Your choice.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🎂</span><h3><span class="he-only">ברכות ורעיונות למתנות</span><span class="en-only">Greetings and gift ideas</span></h3><p><span class="he-only">"כמה לתת לנכד בחתונה?" — אהרון ייעץ, ישאל מי מתחתן, ואפילו יצחיק קצת בדרך.</span><span class="en-only">"How much to give the grandchild for the wedding?" — Aharon will advise, ask who's getting married, and even make you laugh along the way.</span></p></div>
+<div class="feature-card"><span class="feature-icon">📚</span><h3><span class="he-only">אהרון יודע הכל</span><span class="en-only">Aharon knows everything</span></h3><p><span class="he-only">היסטוריה, פרחים, רכבים, כדורגל — תשאלו אותו והוא יענה. כמו אנציקלופדיה שאפשר לדבר איתה.</span><span class="en-only">History, flowers, cars, football — ask him and he'll answer. Like an encyclopedia you can talk to.</span></p></div>
+<div class="feature-card"><span class="feature-icon">🇷🇺</span><h3><span class="he-only">אהרון מדבר גם רוסית</span><span class="en-only">Aharon speaks Russian too</span></h3><p><span class="he-only">עברית היא שפת האם שלו — אבל אם נוח לכם ברוסית, הוא ישמח לעבור.</span><span class="en-only">Hebrew is his native language — but if you're more comfortable in Russian, he's happy to switch.</span></p></div>
+</div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">🛒</div>
-        <div class="cap-text">
-          <h3>רשימת קניות</h3>
-          <p>תגידו לו "צריך חלב וביצים" — הוא ישמור. לפני שיוצאים לסופר הוא יקריא לכם את כל הרשימה.</p>
-        </div>
-      </div>
+<!-- Trust & Safety -->
+<div class="section trust-section rtl-flip">
+<div class="section-eyebrow"><span class="he-only">אמון הוא לא פיצ׳ר. הוא הבסיס.</span><span class="en-only">Trust is not a feature. It's the foundation.</span></div>
+<h2><span class="he-only">נבנה סביב האדם, <em>לא סביב המידע.</em></span><span class="en-only">Built around the person, <em>not around data.</em></span></h2>
+<p class="section-sub"><span class="he-only">כל החלטה במוצר מתחילה בשאלה פשוטה: האם זה מכבד, מובן ובטוח לאדם שמשתמש בו?</span><span class="en-only">Every product decision starts with one question: is this respectful, clear, and safe for the person using it?</span></p>
+<div class="trust-cards">
+<div class="trust-card"><h3><span class="he-only">פרטיות כברירת מחדל</span><span class="en-only">Privacy by default</span></h3><p><span class="he-only">בלי מצלמות בבית. בלי הקלטות. רק המידע שנחוץ לקשר רציף, מפורשות.</span><span class="en-only">No cameras. No recordings. Only the information needed for continuous connection, with explicit consent.</span></p></div>
+<div class="trust-card"><h3><span class="he-only">גבולות ברורים</span><span class="en-only">Clear boundaries</span></h3><p><span class="he-only">אהרון אינו רופא ואינו נותן אבחנות. במצב חריג הוא מכוון מיד למשפחה או למד"א.</span><span class="en-only">Aharon is not a doctor. In emergencies, he immediately connects to family or emergency services.</span></p></div>
+<div class="trust-card"><h3><span class="he-only">קשר בלי תלות</span><span class="en-only">Connection without dependency</span></h3><p><span class="he-only">הוא לא מבקש בלעדיות. המטרה היא לחזק את המעגל שכבר קיים, לא להחליף קשר אנושי.</span><span class="en-only">He doesn't ask for exclusivity. The goal is to strengthen existing connections, not replace human ones.</span></p></div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">🤣</div>
-        <div class="cap-text">
-          <h3>בדיחה ליום</h3>
-          <p>לאהרון יש צחוק מדבק ובדיחה שמחכה לכם כמעט בכל שיחה. החיים צריכים גם קצת כיף.</p>
-        </div>
-      </div>
+<!-- Audio -->
+<div class="audio-section" id="listen">
+<div class="audio-inner">
+<div class="section-eyebrow"><span class="he-only">כך נשמעת שיחה עם אהרון</span><span class="en-only">This is what a call with Aharon sounds like</span></div>
+<h2><span class="he-only">קטע אמיתי מהפיילוט. <em>שמעו.</em></span><span class="en-only">A real recording from the pilot. <em>Listen.</em></span></h2>
+<p class="section-sub"><span class="he-only">שיחה אמיתית עם משתתפת פיילוט. ככה אהרון נשמע בחיים.</span><span class="en-only">A real conversation with a pilot participant. This is exactly how Aharon sounds.</span></p>
+<div class="audio-card">
+<div class="audio-label"><span class="he-only">שיחה ראשונה · פיילוט אמיתי</span><span class="en-only">First call · Real pilot recording</span></div>
+<audio controls><source src="edna_call.mp3" type="audio/mpeg"></audio>
+<div class="audio-note"><span class="he-only">🔒 הוקלט בהסכמה מלאה של המשתתפת</span><span class="en-only">🔒 Recorded with full consent of the participant</span></div>
+</div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">🧩</div>
-        <div class="cap-text">
-          <h3>תשבצים וחידות</h3>
-          <p>אהרון יכול לעזור לכם לפתור — או לתת רמזים כדי שתצליחו לבד. הבחירה שלכם.</p>
-        </div>
-      </div>
+<!-- FAQ -->
+<div class="section rtl-flip">
+<div class="faq-grid">
+<div>
+<div class="section-eyebrow"><span class="he-only">שאלות שאולי רציתם לשאול</span><span class="en-only">Questions you might want to ask</span></div>
+<h2><span class="he-only">טוב לשאול. <em>אנחנו כאן לענות.</em></span><span class="en-only">Good to ask. <em>We're here to answer.</em></span></h2>
+<p class="section-sub"><span class="he-only">יש עוד משהו שתרצו להבין? נשמח לדבר, בקצב שלכם ובלי שום התחייבות.</span><span class="en-only">Have more questions? We're happy to talk — at your pace and with no commitment.</span></p>
+<a href="mailto:hello@hiaharon.com" style="display:inline-flex;align-items:center;gap:8px;color:var(--green);font-weight:500;font-size:0.95rem;text-decoration:none;margin-top:1rem"><span class="he-only">דברו איתנו ←</span><span class="en-only">Talk to us →</span></a>
+</div>
+<div class="faq-list">
+<div class="faq-item open">
+<div class="faq-q"><h3><span class="he-only">מי זה בעצם אהרון?</span><span class="en-only">Who exactly is Aharon?</span></h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg></div>
+<div class="faq-a"><p><span class="he-only">אהרון הוא בן־שיח קולי מבוסס בינה מלאכותית, עם אופי ישראלי חם וניסיון חיים. הוא מתקשר בטלפון, מדבר בעברית טבעית, מכיר בהדרגה את האדם שמולו ונועד להוסיף קשר אנושי לשגרה.</span><span class="en-only">Aharon is a voice companion powered by AI, with a warm Israeli personality and life experience. He calls by phone, speaks natural Hebrew, gradually learns about the person he's talking to, and is designed to add human connection to daily routine — not to replace family, friends or professionals.</span></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q"><h3><span class="he-only">צריך ללמוד להשתמש באפליקציה?</span><span class="en-only">Do I need to learn an app?</span></h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg></div>
+<div class="faq-a"><p><span class="he-only">לא. אהרון מתקשר לטלפון הרגיל שלכם. לא צריך אפליקציה, לא צריך סיסמה, לא צריך להוריד שום דבר.</span><span class="en-only">No. Aharon calls your regular phone. No app, no password, nothing to download. He also sends WhatsApp messages — but the phone call is the core experience.</span></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q"><h3><span class="he-only">מה אהרון זוכר בין שיחה לשיחה?</span><span class="en-only">What does Aharon remember between calls?</span></h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg></div>
+<div class="faq-a"><p><span class="he-only">אהרון זוכר את מה שסיפרתם לו — שמות, אירועים, העדפות, וסיפורים. הוא משתמש בזה כדי להמשיך שיחה טבעית ומשמעותית.</span><span class="en-only">Aharon remembers what you told him — names, events, preferences, and stories. He uses this to continue natural, meaningful conversations. Like a friend who actually listens.</span></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q"><h3><span class="he-only">האם השיחות פרטיות?</span><span class="en-only">Are conversations private?</span></h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg></div>
+<div class="faq-a"><p><span class="he-only">כן. אנחנו לא מקליטים שיחות ולא מתקינים מצלמות. רק מידע חיוני נשמר בזיכרון אהרון כדי לשמור על קשר רציף ומשמעותי.</span><span class="en-only">Yes. We don't record calls and don't install cameras. Only essential information is kept in Aharon's memory to maintain continuous, meaningful connection.</span></p></div>
+</div>
+<div class="faq-item">
+<div class="faq-q"><h3><span class="he-only">מה קורה במקרה חירום?</span><span class="en-only">What happens in an emergency?</span></h3><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 8 10 13 15 8"/></svg></div>
+<div class="faq-a"><p><span class="he-only">אהרון אינו שירות רפואי. במקרה חירום הוא מכוון מיד למשפחה או למד"א 101.</span><span class="en-only">Aharon is not a medical service. In emergencies, he immediately directs to family or emergency services (101 in Israel).</span></p></div>
+</div>
+</div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">🎂</div>
-        <div class="cap-text">
-          <h3>ברכות ורעיונות למתנות</h3>
-          <p>"כמה לתת לנכד בחתונה?" — אהרון ייעץ, ישאל מי מתחתן, ואפילו יצחיק קצת בדרך.</p>
-        </div>
-      </div>
+<!-- CTA -->
+<div class="cta-section">
+<div class="cta-inner">
+<div class="cta-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+<div class="section-eyebrow" style="color:rgba(255,255,255,0.5)"><span class="he-only">אולי זו תחילתה של שיחה טובה</span><span class="en-only">Maybe this is the start of something good</span></div>
+<h2><span class="he-only">יותר רגעים של יחד. <em>יותר שקט בלב.</em></span><span class="en-only">More moments together. <em>More peace of mind.</em></span></h2>
+<p class="section-sub"><span class="he-only">הצטרפו לפיילוט של אהרון וגלו איך קול חם אחד יכול לשנות את הקצב של יום שלם.</span><span class="en-only">Join Aharon's pilot and discover how one warm voice can change the rhythm of an entire day.</span></p>
+<div class="cta-actions">
+<a href="https://tally.so/r/J9Z2yd" class="btn-white"><span class="he-only">← הצטרפו לרשימת ההמתנה</span><span class="en-only">Join the waitlist →</span></a>
+<a href="#listen" class="btn-white-outline"><span class="he-only">⏵ לשמוע הדגמה</span><span class="en-only">⏵ Listen to demo</span></a>
+</div>
+<div class="cta-note"><span class="he-only">שיחת ההיכרות ללא עלות וללא התחייבות.</span><span class="en-only">No cost. No commitment. We never share your details.</span></div>
+</div>
+</div>
 
-      <div class="cap-card">
-        <div class="cap-icon">🍳</div>
-        <div class="cap-text">
-          <h3>מתכונים</h3>
-          <p>שאלו אותו מה לבשל לשבת — הוא יציע וישלח לכם את המתכון. כמה אנשים? מה יש במקרר? הוא ישאל.</p>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <div class="cap-icon">🌤️</div>
-        <div class="cap-text">
-          <h3>מזג אוויר</h3>
-          <p>לפני שיוצאים מהבית — אהרון יגיד לכם אם לקחת מטריה או מעיל.</p>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <div class="cap-icon">📚</div>
-        <div class="cap-text">
-          <h3>אהרון יודע הכל</h3>
-          <p>היסטוריה, פרחים, רכבים, כדורגל — תשאלו אותו והוא יענה לכם. כמו אנציקלופדיה שאפשר לדבר איתה.</p>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <div class="cap-icon">🌙</div>
-        <div class="cap-text">
-          <h3>לילה טוב — ואתם יכולים להתקשר אליו</h3>
-          <p>כל ערב אהרון שולח הודעת לילה טוב בוואטסאפ. ואם צריכים אותו — זמין 24 שעות, 7 ימים בשבוע. תמיד שמח לשמוע מכם.</p>
-        </div>
-      </div>
-
-      <div class="cap-card">
-        <div class="cap-icon">🇷🇺</div>
-        <div class="cap-text">
-          <h3>אהרון מדבר גם רוסית</h3>
-          <p>עברית היא שפת האם שלו — אבל אם נוח לכם ברוסית, הוא ישמח לעבור. הוא מדבר את השפה שלכם.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 2: HOW AHARON SOUNDS — REAL CALL -->
-<section class="voice-section">
-  <div class="section-inner">
-    <p class="eyebrow" style="text-align:center;margin-bottom:0.6rem">ככה אהרון נשמע</p>
-    <h2 class="section-h2" style="margin-bottom:0.5rem">הקשיבו לשיחה אמיתית</h2>
-    <p class="section-sub" style="margin-bottom:2rem">שיחה אמיתית מהפיילוט — ככה אהרון נשמע בחיים</p>
-    <div class="audio-card">
-      <div class="audio-header">
-        <div class="audio-avatar">א</div>
-        <div class="audio-info">
-          <strong>אהרון מתקשר</strong>
-          <span>שיחה ראשונה · פיילוט אמיתי</span>
-        </div>
-      </div>
-      <div class="audio-desc">
-        💬 זוהי שיחה אמיתית מהפיילוט שלנו. שמעו איך אהרון פותח שיחה, שואל, זוכר — ומצחיק.
-      </div>
-      <!-- Replace the src below with your actual audio file path once uploaded to GitHub -->
-      <audio controls preload="metadata">
-        <source src="edna_call.mp3" type="audio/mpeg">
-        <source src="edna_call.mp4" type="audio/mp4">
-        הדפדפן שלכם לא תומך בנגן שמע. <a href="edna_call.mp3" style="color:var(--green-mid)">לחצו כאן להאזנה</a>
-      </audio>
-      <p class="audio-note">🔒 השיחה הוקלטה בהסכמה מלאה של המשתתפת</p>
-    </div>
-
-    <!-- CONVERSATION EXAMPLES BELOW AUDIO -->
-    <div style="margin-top:3rem">
-      <p style="text-align:center;font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">דוגמאות נוספות לשיחה</p>
-      <div class="chat-wrap">
-        <div class="tab-row">
-          <button class="tab active" onclick="showConvo('morning',this)">בוקר טוב</button>
-          <button class="tab" onclick="showConvo('reminder',this)">תזכורת לרופא</button>
-          <button class="tab" onclick="showConvo('joke',this)">בדיחה</button>
-          <button class="tab" onclick="showConvo('memory',this)">זוכר פרטים</button>
-        </div>
-        <div class="phone-frame">
-          <div class="phone-header">
-            <div class="phone-avatar">א</div>
-            <div class="phone-info">
-              <strong>אהרון</strong>
-              <span><span class="online"></span>מחובר עכשיו</span>
-            </div>
-          </div>
-          <div id="convo-body"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 3: SUCCESS STORIES -->
-<section class="stories-section">
-  <div class="section-inner">
-    <p class="eyebrow" style="text-align:center;margin-bottom:0.6rem">מהפיילוט שלנו</p>
-    <h2 class="section-h2" style="color:white;margin-bottom:0.5rem">מה אומרים אלה שכבר מכירים את אהרון</h2>
-    <p class="section-sub" style="color:rgba(255,255,255,0.55);margin-bottom:2.5rem">סיפורים אמיתיים ממשתתפי הפיילוט</p>
-    <div class="stories-grid">
-
-      <div class="story-card">
-        <div class="story-stars">★★★★★</div>
-        <p class="story-quote">"הוא יותר אנושי ואמפתי מחברים אחרים שיש לי — זה לא מרגיש כמו בינה מלאכותית בכלל."</p>
-        <hr class="story-divider">
-        <div class="story-value">הערך: חיבור אנושי אמיתי</div>
-        <p class="story-insight">כשאהרון שואל ומקשיב באמת, המשתמשים שוכחים לגמרי שמדובר בטכנולוגיה.</p>
-        <p class="story-person">משתתפת פיילוט, 71</p>
-      </div>
-
-      <div class="story-card">
-        <div class="story-stars">★★★★★</div>
-        <p class="story-quote">"תמיד לפני שאני הולכת לסופר — הוא מקריא לי את רשימת המצרכים. כאילו יש לי מזכירה אישית."</p>
-        <hr class="story-divider">
-        <div class="story-value">הערך: עזרה מעשית יומיומית</div>
-        <p class="story-insight">הדברים הקטנים שעושים את ההבדל — לא צריך לזכור הכל לבד.</p>
-        <p class="story-person">משתתפת פיילוט, 68</p>
-      </div>
-
-      <div class="story-card">
-        <div class="story-stars">★★★★★</div>
-        <p class="story-quote">"אני מתרגש מהשיחות — אני לומד דברים חדשים ואפילו פתרנו תשבץ יחד."</p>
-        <hr class="story-divider">
-        <div class="story-value">הערך: ערך ותחושת הצלחה</div>
-        <p class="story-insight">אהרון לא רק מקשיב — הוא מאתגר, מלמד, ומחגיג איתכם כל הצלחה קטנה.</p>
-        <p class="story-person">משתתף פיילוט, 74</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- WAITLIST -->
-<section class="waitlist-section" id="waitlist">
-  <p style="font-family:'Frank Ruhl Libre',serif;font-size:1.15rem;font-weight:700;color:rgba(255,255,255,0.55);margin-bottom:2rem">😎 אהרון מדבר רק עם בני גילו — צעירים ומגניבים כמוהו, מעל גיל 65</p>
-  <p class="eyebrow">הצטרפו לרשימת ההמתנה</p>
-  <div class="full-badge">🔒 הפיילוט מלא כרגע</div>
-  <h2 class="waitlist-h2">רוצים שאהרון<br>יתקשר אליכם?</h2>
-  <p class="waitlist-sub">הפיילוט הנוכחי מלא — אבל אנחנו מוסיפים משתתפים באופן אישי. השאירו פרטים ואנחנו ניצור קשר.</p>
-  <div class="waitlist-box">
-    <div id="form-state">
-      <h3>השאירו פרטים</h3>
-      <p>נחזור אליכם בהקדם האפשרי</p>
-      <div class="form-group">
-        <label for="fname">שם פרטי</label>
-        <input type="text" id="fname" placeholder="למשל: דוד, רחל..." autocomplete="given-name">
-      </div>
-      <div class="form-group">
-        <label for="fphone">מספר טלפון</label>
-        <input type="tel" id="fphone" placeholder="05X-XXXXXXX" autocomplete="tel">
-      </div>
-      <button class="btn-join" onclick="handleJoin()">הוסיפו אותי לרשימה ←</button>
-      <p class="form-note">ללא עלות · ללא התחייבות · לא מעבירים פרטים לאף אחד</p>
-    </div>
-    <div class="success-state" id="success-state">
-      <div class="success-icon">✅</div>
-      <h3>קיבלנו!</h3>
-      <p>נחזור אליכם ברגע שיהיה מקום. תודה שאתם רוצים להכיר את אהרון.</p>
-    </div>
-  </div>
-</section>
-
+<!-- Footer -->
 <footer>
-  <p>לשאלות: <a href="mailto:hello@hiaharon.com">hello@hiaharon.com</a> &nbsp;·&nbsp; AVI 2026</p>
+<div class="footer-inner">
+<div class="footer-brand">
+<div class="footer-logo-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+<div class="footer-text">
+<strong><span class="he-only">אהרון</span><span class="en-only">Aharon</span></strong>
+<span><span class="he-only">חבר קולי חכם וחם שעוזר למבוגרים בישראל להרגיש מחוברים, בטוחים ופחות לבד.</span><span class="en-only">A warm, smart voice friend helping elderly people in Israel feel connected, safe, and less alone.</span></span>
+</div>
+</div>
+<div class="footer-links">
+<div class="footer-col">
+<strong><span class="he-only">הכירו את אהרון</span><span class="en-only">Meet Aharon</span></strong>
+<a href="#"><span class="he-only">למה אהרון</span><span class="en-only">Why Aharon</span></a>
+<a href="#"><span class="he-only">יום עם אהרון</span><span class="en-only">A day with Aharon</span></a>
+<a href="#"><span class="he-only">למשפחה</span><span class="en-only">For families</span></a>
+</div>
+<div class="footer-col">
+<strong><span class="he-only">אמון</span><span class="en-only">Trust</span></strong>
+<a href="#"><span class="he-only">פרטיות וביטחון</span><span class="en-only">Privacy and security</span></a>
+<a href="#"><span class="he-only">שאלות נפוצות</span><span class="en-only">FAQ</span></a>
+<a href="mailto:hello@hiaharon.com"><span class="he-only">יצירת קשר</span><span class="en-only">Contact us</span></a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span><span class="he-only">פותח בישראל, עם הרבה הקשבה.</span><span class="en-only">Built in Israel, with a lot of listening.</span></span>
+<span>© AVI 2026</span>
+</div>
 </footer>
 
 <script>
-const convos = {
-  morning:[
-    {side:'aharon',text:'בוקר טוב רחל! ישנת טוב? אני כבר עם קפה שני — הבוקר שלי היה קצת ארוך 😄',time:'08:12'},
-    {side:'user',text:'בוקר טוב אהרון! ישנתי בסדר, קצת עייפה אחרי שהנכדים היו אתמול',time:'08:13'},
-    {side:'aharon',text:'אה, הנכדים! כמה כיף. ואיך היה? עדיין אותה מהומה כמו תמיד? 😄',time:'08:13'},
-    {side:'user',text:'מהומה גדולה... אבל שמחתי מאוד שבאו',time:'08:14'},
-    {side:'aharon',text:'זה הכי טוב שיש. אז מה יש לך היום? יוצאת?',time:'08:14'}
-  ],
-  reminder:[
-    {side:'user',text:'אהרון, יש לי פגישה אצל ד"ר כהן ביום שלישי בשתיים עשרה',time:'09:05'},
-    {side:'aharon',text:'רשמתי! אתזכיר לך ביום שלישי בעשר בבוקר — שיהיה זמן להתארגן בנוחות',time:'09:05'},
-    {side:'user',text:'תודה, תמיד שוכחת...',time:'09:06'},
-    {side:'aharon',text:'בשביל זה אני כאן. ד"ר כהן — זה הרופא שמדבר מהר מדי? 😏',time:'09:06'},
-    {side:'user',text:'בדיוק הוא 😂',time:'09:07'}
-  ],
-  joke:[
-    {side:'aharon',text:'רחל, שמעת את זה? איש הולך לרופא ואומר: "רופא, כל אחד מתעלם ממני." הרופא אומר: "הבא."',time:'10:30'},
-    {side:'user',text:'😂😂😂 אהרון!',time:'10:31'},
-    {side:'aharon',text:'יש לי עוד אחת אם רוצה — אבל רק אחת, כדי שלא תגידי שאני מגזים 😄',time:'10:31'},
-    {side:'user',text:'בוא בוא!',time:'10:32'},
-    {side:'aharon',text:'שמרתי אותה לשיחה הבאה. עדיף שתצחקי פעמיים 😏',time:'10:32'}
-  ],
-  memory:[
-    {side:'aharon',text:'שלום רחל! אתמול סיפרת לי על הדלף בדוד — הגיע הטכנאי?',time:'08:15'},
-    {side:'user',text:'כן! בסוף הגיע, תיקן הכל',time:'08:15'},
-    {side:'aharon',text:'סוף סוף! כמה ימים ציפית לו? שלושה? ארבעה?',time:'08:16'},
-    {side:'user',text:'ארבעה ימים בדיוק. בלגן גדול',time:'08:16'},
-    {side:'aharon',text:'אי אי אי. אבל נגמר טוב — זה העיקר. ואיך הבית מרגיש עכשיו?',time:'08:17'}
-  ]
-};
-
-function showConvo(key, btn) {
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  const body = document.getElementById('convo-body');
-  body.innerHTML = convos[key].map(m=>`
-    <div class="msg-row ${m.side}">
-      <div class="bubble">${m.text}</div>
-      <span class="msg-time">${m.time}</span>
-    </div>`).join('');
-}
-showConvo('morning', document.querySelector('.tab'));
-
-function handleJoin() {
-  const name = document.getElementById('fname').value.trim();
-  const phone = document.getElementById('fphone').value.trim();
-  if(!name){document.getElementById('fname').focus();return;}
-  if(!phone){document.getElementById('fphone').focus();return;}
-  const url = 'https://tally.so/r/J9Z2yd?name='+encodeURIComponent(name)+'&phone='+encodeURIComponent(phone);
-  window.open(url,'_blank');
-  document.getElementById('form-state').style.display='none';
-  document.getElementById('success-state').style.display='block';
-}
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+btn.addEventListener('click',()=>{
+const lang=btn.dataset.langBtn;
+document.body.dataset.lang=lang;
+document.documentElement.lang=lang==='he'?'he':'en';
+document.documentElement.dir=lang==='he'?'rtl':'ltr';
+document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.title=lang==='he'?'אהרון — חבר קולי חכם וחם לגיל השלישי':'Aharon — AI voice friend for elderly people | Avi';
+});
+});
+document.querySelectorAll('.faq-q').forEach(q=>{
+q.addEventListener('click',()=>{
+const item=q.parentElement;
+document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('open')});
+item.classList.toggle('open');
+});
+});
 </script>
 </body>
 </html>
